@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://d16cq4ucq7got" path="res://phone.gd" id="1_lnqov"]
 
 [node name="phone" type="Node2D" unique_id=1517112284]
+position = Vector2(50, 50)
 script = ExtResource("1_lnqov")

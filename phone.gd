@@ -3,17 +3,13 @@ extends Node2D
 
 signal finished
 
-const RADIUS = 30
-# TODO: password
 const GAMES = ["dots", "pattern", "password"]
 
-@export var phone_position: Vector2 = Vector2(50, 50):
-	set(v): phone_position = v; queue_redraw()
 @export var phone_size: Vector2 = Vector2(400, 500):
 	set(v): phone_size = v; queue_redraw()
 
 func _draw() -> void:
-	draw_rect(Rect2(phone_position, phone_size), Color.PINK, false)
+	draw_rect(Rect2(Vector2.ZERO, phone_size), Color.PINK, false)
 
 func _ready() -> void:
 	# Randomly load mini game
@@ -24,7 +20,7 @@ func _ready() -> void:
 	var game = Node2D.new()
 	game.set_script(script)
 	add_child(game)
-	game.setup(phone_position, phone_size)
+	game.setup(Vector2.ZERO, phone_size)
 	game.finished.connect(_on_finished)
 
 func _on_finished() -> void:
