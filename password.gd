@@ -19,7 +19,6 @@ const ROW3 := ["z","x","c","v","b","n","m"]
 const ROW4 := [" "]
 
 # ── State ────────────────────────────────────────────────────────────
-var _show_success: bool = false
 var phone_position: Vector2
 var phone_size:     Vector2
 
@@ -136,21 +135,6 @@ func _draw() -> void:
 		Vector2(_input_rect.position.x + (_input_rect.size.x - txt_sz.x) * 0.5,
 				_input_rect.position.y + (_input_rect.size.y + txt_sz.y) * 0.5 - 10),
 		display, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE_INPUT, txt_col)
-	# Draw Success Screen
-	if _show_success:
-			draw_rect(Rect2(phone_position, phone_size), Color(0.07, 0.07, 0.09), true)
-			var msg := "Access Granted"
-			var msg_sz := font.get_string_size(msg, HORIZONTAL_ALIGNMENT_LEFT, -1, 28)
-			draw_string(font,
-				phone_position + (phone_size - msg_sz) * 0.5,
-				msg, HORIZONTAL_ALIGNMENT_LEFT, -1, 28, Color(0.27, 1.0, 0.55))
-			var sub := "Press Go to continue"
-			var sub_sz := font.get_string_size(sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 14)
-			draw_string(font,
-				phone_position + Vector2((phone_size.x - sub_sz.x) * 0.5, phone_size.y * 0.55),
-				sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(0.6, 0.6, 0.7))
-			return
-
 	# Keyboard backing
 	var kb_rect : Rect2 = Rect2(
 		phone_position.x,
@@ -239,10 +223,7 @@ func _input(event: InputEvent) -> void:
 		return
 
 	if _go_rect.has_point(pos):
-		if _show_success:
-			finished.emit()
-		else:
-			_check_password()
+		_check_password()
 		return
 
 	for i in _key_rects.size():
@@ -254,9 +235,7 @@ func _input(event: InputEvent) -> void:
 
 func _check_password() -> void:
 	if _current_input == TARGET_PASSWORD:
-		_show_success = true
-		set_process(false)
-		queue_redraw()
+		finished.emit()
 	elif _current_input.length() > 0:
 		_flash_wrong = true
 		_flash_timer = FLASH_TIME
