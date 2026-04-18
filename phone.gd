@@ -3,8 +3,8 @@ extends Node2D
 signal finished
 
 const RADIUS = 30
-# TODO: dots, pattern, password
-const GAMES = ["dots"]
+# TODO: password
+const GAMES = ["dots", "pattern"]
 
 @export var phone_position: Vector2 = Vector2(50, 50)
 @export var phone_size: Vector2 = Vector2(400, 500)
