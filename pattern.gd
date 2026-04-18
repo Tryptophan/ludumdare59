@@ -40,7 +40,9 @@ func setup(pos: Vector2, size: Vector2) -> void:
 	var input_span = min(size.x * 0.85, remaining)
 	cell_size = input_span / GRID
 	var input_x = pos.x + (size.x - input_span) / 2.0
-	input_origin = Vector2(input_x, ref_bottom)
+	var input_bottom_y = pos.y + size.y - 20.0
+	var input_y = max(ref_bottom, input_bottom_y - input_span)
+	input_origin = Vector2(input_x, input_y)
 
 	_generate_pattern()
 
@@ -56,7 +58,7 @@ func _adjacent(a: int, b: int) -> bool:
 
 # Builds target_pattern as a random walk of adjacent unvisited nodes
 func _generate_pattern() -> void:
-	var length = randi_range(GRID, GRID + 2)
+	var length = randi_range(max(GRID * GRID - 4, 1), max(GRID * GRID - 2, 2))
 	target_pattern.clear()
 	var start = randi() % (GRID * GRID)
 	target_pattern.append(start)
@@ -73,7 +75,7 @@ func _generate_pattern() -> void:
 		target_pattern.append(neighbors[randi() % neighbors.size()])
 
 
-# Converts a flat node index (0–8) to pixel coords within a grid at `origin`
+# Converts a flat node index to pixel coords within a grid at `origin`
 func _node_world_pos(index: int, origin: Vector2, cs: float) -> Vector2:
 	var col: int = index % GRID
 	@warning_ignore("integer_division")
@@ -81,8 +83,8 @@ func _node_world_pos(index: int, origin: Vector2, cs: float) -> Vector2:
 	return origin + Vector2(col * cs + cs / 2.0, row * cs + cs / 2.0)
 
 
-# Draws one 3x3 grid: connecting lines, node circles, and (optionally) order numbers
-func _draw_grid(origin: Vector2, cs: float, pattern: Array[int], show_numbers: bool, is_ref: bool) -> void:
+# Draws one grid: connecting lines, node circles
+func _draw_grid(origin: Vector2, cs: float, pattern: Array[int], is_ref: bool) -> void:
 	var inactive_fill = Color(0.25, 0.25, 0.3)
 	# Reference grid uses blue; input grid uses green
 	var active_fill = Color(0.3, 0.6, 1.0) if is_ref else Color(0.2, 0.8, 0.5)
@@ -103,13 +105,6 @@ func _draw_grid(origin: Vector2, cs: float, pattern: Array[int], show_numbers: b
 		var active = i in pattern
 		draw_circle(p, node_r, active_fill if active else inactive_fill)
 		draw_circle(p, node_r - 3.0, Color(0.08, 0.08, 0.12))
-		# Optionally show the step number (1-based) centered on active nodes
-		if active and show_numbers:
-			var order = str(pattern.find(i) + 1)
-			var font = ThemeDB.fallback_font
-			var font_size = int(node_r * 0.9)
-			var text_size = font.get_string_size(order, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size)
-			draw_string(font, p - text_size / 2.0, order, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, Color.WHITE)
 
 
 func _draw() -> void:
@@ -120,8 +115,8 @@ func _draw() -> void:
 	draw_string(ThemeDB.fallback_font, ref_origin + Vector2((ref_cell_size * GRID - ref_label_size.x) / 2.0, -6), ref_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color.WHITE)
 	draw_string(ThemeDB.fallback_font, input_origin + Vector2(0, -6), "Draw it", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color.WHITE)
 
-	_draw_grid(ref_origin, ref_cell_size, target_pattern, false, true)
-	_draw_grid(input_origin, cell_size, current_pattern, false, false)
+	_draw_grid(ref_origin, ref_cell_size, target_pattern, true)
+	_draw_grid(input_origin, cell_size, current_pattern, false)
 
 	# Draw a faint line from the last visited node to the cursor while dragging
 	if is_dragging and not current_pattern.is_empty():

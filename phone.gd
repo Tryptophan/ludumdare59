@@ -5,7 +5,7 @@ signal finished
 
 const GAMES = ["dots", "pattern", "password"]
 
-@export var phone_size: Vector2 = Vector2(400, 500):
+@export var phone_size: Vector2 = Vector2(338, 600):
 	set(v): phone_size = v; queue_redraw()
 
 func _draw() -> void:
