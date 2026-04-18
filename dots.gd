@@ -27,8 +27,9 @@ func _draw() -> void:
 # Press all dots on the screen
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var local_pos = to_local(event.position)
 		for i in range(circles.size() - 1, -1, -1):
-			if event.position.distance_to(circles[i]) <= RADIUS:
+			if local_pos.distance_to(circles[i]) <= RADIUS:
 				circles.remove_at(i)
 				queue_redraw()
 				if circles.is_empty():

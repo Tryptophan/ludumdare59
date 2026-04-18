@@ -4,4 +4,3 @@
 
 [node name="phone" type="Node2D" unique_id=1517112284]
 script = ExtResource("1_lnqov")
-draw_size = Vector2(800, 600)
