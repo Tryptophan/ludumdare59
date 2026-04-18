@@ -141,10 +141,11 @@ func _node_at(pos: Vector2, origin: Vector2, cs: float) -> int:
 
 
 func _input(event: InputEvent) -> void:
+	var local_pos = to_local(event.position)
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			# Start a new drag only if the player clicks on a node
-			var node = _node_at(event.position, input_origin, cell_size)
+			var node = _node_at(local_pos, input_origin, cell_size)
 			if node != -1:
 				is_dragging = true
 				current_pattern.clear()
@@ -158,7 +159,7 @@ func _input(event: InputEvent) -> void:
 				_check_pattern()
 
 	elif event is InputEventMouseMotion and is_dragging:
-		var node = _node_at(event.position, input_origin, cell_size)
+		var node = _node_at(local_pos, input_origin, cell_size)
 		# Append the node only if it hasn't been visited yet
 		if node != -1 and not current_pattern.has(node):
 			current_pattern.append(node)
