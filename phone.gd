@@ -3,7 +3,7 @@ extends Node2D
 
 signal finished
 
-const GAMES = ["dots", "pattern", "password"]
+const GAMES = ["ads", "pattern", "password"]
 
 @export var phone_size: Vector2 = Vector2(338, 600):
 	set(v): phone_size = v; queue_redraw()
