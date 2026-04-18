@@ -230,7 +230,7 @@ func _input(event: InputEvent) -> void:
 			and event.button_index == MOUSE_BUTTON_LEFT):
 		return
 
-	var pos: Vector2 = event.position
+	var pos: Vector2 = to_local(event.position)
 
 	if _backspace_rect.has_point(pos):
 		if not _current_input.is_empty():
