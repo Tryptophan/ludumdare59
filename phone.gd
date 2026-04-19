@@ -3,7 +3,7 @@ extends Node2D
 
 signal finished
 
-const GAMES = ["ads", "pattern", "password", "case-opening"]
+const GAMES = ["ads", "pattern", "password", "case-opening", "tos"]
 
 enum State {IDLE, PLAYING, FINISHED}
 var _state: State = State.IDLE
