@@ -161,15 +161,30 @@ func _input(event: InputEvent) -> void:
 		queue_redraw()
 
 
+func _get_edges(pattern: Array[int]) -> Array:
+	var edges = []
+	for i in range(pattern.size() - 1):
+		var a = pattern[i]; var b = pattern[i + 1]
+		edges.append([min(a, b), max(a, b)])
+	edges.sort()
+	return edges
+
+
 func _check_pattern() -> void:
-	# Order doesn't matter - check that both patterns contain the same set of nodes
+	# Check same set of nodes
 	var target_set = target_pattern.duplicate()
 	var current_set = current_pattern.duplicate()
 	target_set.sort()
 	current_set.sort()
-	if current_set == target_set:
-		finished.emit()
-	else:
-		# Wrong nodes - clear and let the player try again
+	if current_set != target_set:
 		current_pattern.clear()
 		queue_redraw()
+		return
+
+	# Check same connections between adjacent nodes (path drawn in either direction is fine)
+	if _get_edges(current_pattern) != _get_edges(target_pattern):
+		current_pattern.clear()
+		queue_redraw()
+		return
+
+	finished.emit()
