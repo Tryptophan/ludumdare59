@@ -32,7 +32,7 @@ func setup(pos: Vector2, size: Vector2) -> void:
 	var ref_span = min(size.x * 0.4, size.y * 0.18)
 	ref_cell_size = ref_span / GRID
 	var ref_x = pos.x + (size.x - ref_span) / 2.0
-	ref_origin = Vector2(ref_x, pos.y + size.y * 0.03)
+	ref_origin = Vector2(ref_x, pos.y + size.y * 0.03 + 40.0)
 
 	# Input grid fills the remaining height below the reference grid
 	var ref_bottom = ref_origin.y + ref_span + 20.0
@@ -108,8 +108,6 @@ func _draw_grid(origin: Vector2, cs: float, pattern: Array[int], is_ref: bool) -
 
 
 func _draw() -> void:
-	draw_rect(Rect2(phone_position, phone_size), Color.BLUE, false)
-
 	var ref_label = "Pattern"
 	var ref_label_size = ThemeDB.fallback_font.get_string_size(ref_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 11)
 	draw_string(ThemeDB.fallback_font, ref_origin + Vector2((ref_cell_size * GRID - ref_label_size.x) / 2.0, -6), ref_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color.WHITE)

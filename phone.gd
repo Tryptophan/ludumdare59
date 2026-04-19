@@ -14,7 +14,7 @@ var _current_game: Node2D = null
 
 
 func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, phone_size), Color.PINK, false)
+	draw_rect(Rect2(Vector2.ZERO, phone_size), Color.BLACK, true)
 
 func _ready() -> void:
 	# _transition(State.IDLE)
