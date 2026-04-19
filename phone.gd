@@ -3,7 +3,7 @@ extends Node2D
 
 signal finished
 
-const GAMES = ["ads", "pattern", "password", "case-opening", "tos"]
+const GAMES = ["ads", "pattern", "password", "case-opening", "tos", "cards"]
 
 enum State {IDLE, PLAYING, FINISHED}
 var _state: State = State.IDLE
@@ -66,7 +66,8 @@ func _show_idle_screen() -> void:
 
 
 func _start_game() -> void:
-	var game_name = GAMES[randi() % GAMES.size()]
+	#var game_name = GAMES[randi() % GAMES.size()]
+	var game_name = GAMES[4]
 	var script = load("res://%s.gd" % game_name)
 	_current_game = Node2D.new()
 	_current_game.set_script(script)

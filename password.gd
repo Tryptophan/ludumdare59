@@ -3,7 +3,11 @@ extends Node2D
 signal finished
 
 # ── Config ──────────────────────────────────────────────────────────
-const PASSWORDS := ["bing bong", "peenar snipper guy", "fat hog peetar"]
+const PASSWORDS := ["bing bong", "peenar snipper guy", "teezy", "charlie", "radio", 
+					"blue rose", "log lady", "damn good coffee", "doppelganger", "glorp", 
+					"bingus", "fire walk", "he he he he he", "yellow king", "blue velvet", 
+					"outer heaven", "diamond dog", "cathode ray tube", "psycho mantis", "solid snake",
+					"liquid snake", "big boss"]
 var TARGET_PASSWORD: String = ""
 const FLASH_TIME      := 0.6
 const FONT_SIZE_KEY   := 15

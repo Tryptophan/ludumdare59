@@ -28,8 +28,8 @@ const LINE_SPACING    := 18.0
 const PAD             := 16.0
 
 const TOS_FILES := [
-	"res://tos/easy.txt", 
-	"res://tos/medium.txt"
+	"res://tos/axolotl.txt", 
+	"res://tos/montypy.txt"
 ]
 
 var TOS_LINES: Array[String] = []
