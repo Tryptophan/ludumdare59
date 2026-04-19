@@ -29,7 +29,7 @@ const PAD             := 16.0
 
 const TOS_FILES := [
 	"res://tos/axolotl.txt", 
-	"res://tos/montypy.txt"
+	"res://tos/montypyt.txt"
 ]
 
 var TOS_LINES: Array[String] = []
@@ -57,7 +57,7 @@ func setup(pos: Vector2, size: Vector2) -> void:
 		phone_size.x * 0.8, 38.0)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not _dragging:
 		_scroll_y += _velocity
 		_velocity *= FRICTION
@@ -87,13 +87,13 @@ func _draw() -> void:
 			var is_title: bool = i == 0
 			var is_section: bool = line.length() > 0 and line[0].is_valid_int() and line.contains(".")
 			var col   := Color(0.1, 0.1, 0.15)
-			var fsize := FONT_SIZE_TITLE if is_title else FONT_SIZE_BODY
+			var line_fsize := FONT_SIZE_TITLE if is_title else FONT_SIZE_BODY
 			if is_title:
 				col = Color(0.1, 0.1, 0.5)
 			elif is_section:
 				col = Color(0.2, 0.2, 0.2)
 			draw_string(font, Vector2(text_x, y), line,
-				HORIZONTAL_ALIGNMENT_LEFT, phone_size.x - PAD * 2, fsize, col)
+				HORIZONTAL_ALIGNMENT_LEFT, phone_size.x - PAD * 2, line_fsize, col)
 		y += LINE_SPACING
 
 	# Fade overlay at bottom
