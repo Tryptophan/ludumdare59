@@ -209,8 +209,10 @@ func _rarity_label(item: int) -> String:
 		return "Uncommon"
 	elif item < 12:
 		return "Rare"
-	elif item < 18:
+	elif item < 16:
 		return "Epic"
+	elif item < 18:
+		return "Legendary"
 	else:
 		return "Contraband"
 
