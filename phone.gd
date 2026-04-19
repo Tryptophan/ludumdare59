@@ -13,12 +13,23 @@ var _current_game: Node2D = null
 	set(v): phone_size = v; queue_redraw()
 
 
+var _tap_player: AudioStreamPlayer
+
 func _draw() -> void:
 	draw_rect(Rect2(Vector2.ZERO, phone_size), Color.BLACK, true)
 
 func _ready() -> void:
+	_tap_player = AudioStreamPlayer.new()
+	_tap_player.stream = load("res://assets/phone-tap.wav")
+	add_child(_tap_player)
 	# _transition(State.IDLE)
 	start()
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var local_pos = to_local(event.global_position)
+		if Rect2(Vector2.ZERO, phone_size).has_point(local_pos):
+			_tap_player.play()
 
 func start() -> void:
 	if _state == State.PLAYING:
@@ -28,7 +39,8 @@ func start() -> void:
 
 func _clear_screen() -> void:
 	for child in get_children():
-		child.queue_free()
+		if child != _tap_player:
+			child.queue_free()
 	_current_game = null
 
 
